@@ -3,6 +3,7 @@ const app=express()
 const path=require('path')
 const mongoose=require('mongoose')
 const authRoutes=require('./routes/authRoutes')
+const dashboardRoutes=require('./routes/dashboardRoutes')
 const session = require('express-session');
 const MongoStore = require('connect-mongo');
 const bodyParser = require('body-parser');
@@ -31,12 +32,14 @@ app.use(
   })
 );
 
+app.set('view engine', 'ejs');
 // Serve static files from 'views' folder
 app.use(express.static(path.join(__dirname,'public')))
 app.use(express.static(path.join(__dirname,'views')))
 
 // Routes
 app.use(authRoutes);
+app.use(dashboardRoutes);
 
 // home pg
 app.get('/',(req,res)=>
@@ -60,12 +63,6 @@ app.get('/signup',(req,res)=>
 app.get('/logout',(req,res)=>
     {
         res.sendFile(path.join(__dirname,'views','login.html'));
-    })
-
-// dashboard pg
-app.get('/dashboard',(req,res)=>
-    {
-        res.sendFile(path.join(__dirname,'views','dashboard.html'));
     })
 
 // courses pg

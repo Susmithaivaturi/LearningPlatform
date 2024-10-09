@@ -11,7 +11,9 @@ const isAuthenticated = (req, res, next) => {
 };
 
 router.get('/dashboard', isAuthenticated, (req, res) => {
-  res.sendFile(path.join(__dirname, 'views','dashboard.html'));
+  const { name, email } = req.session.user;
+  res.redirect(`/dashboard.html?name=${encodeURIComponent(name)}&email=${encodeURIComponent(email)}`);
 });
+
 
 module.exports = router;
