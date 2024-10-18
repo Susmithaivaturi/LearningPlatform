@@ -66,7 +66,7 @@ app.get("/logout", (req, res) => {
 
 // Courses page route
 app.get("/courses", (req, res) => {
-  res.render("courses");
+  res.render("course");
 });
 
 // Start server
