@@ -61,12 +61,24 @@ app.get("/signup", (req, res) => {
 
 // Logout route (redirect to login)
 app.get("/logout", (req, res) => {
-  res.redirect("/login");
+  req.session.destroy((err) => {
+    if (err) {
+      console.error("Error during logout:", err);
+      return res.status(500).json({ message: 'Error logging out' });
+    }
+    res.redirect("/login");
+  });
 });
 
 // Courses page route
 app.get("/courses", (req, res) => {
   res.render("course");
+});
+
+// Error handling middleware
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).send('Internal Server Error');
 });
 
 // Start server
